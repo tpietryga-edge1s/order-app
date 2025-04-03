@@ -50,6 +50,7 @@ public class ProcessingListener {
 			}
 		} else if (paymentOrder.getStatus().equals(Status.PARTIALLY_CONFIRMED)) {
 			if (orderProcessingStatus.getStockStatus().equals(ConfirmationStatus.CONFIRMED)) {
+				paymentOrder.setStockStarted(true);
 				finalizeProcessing(paymentOrder, Status.CONFIRMED);
 				log.info("Payment: CONFIRMED: {}", paymentOrder);
 			} else if (orderProcessingStatus.getStockStatus().equals(ConfirmationStatus.REJECTED)) {
@@ -78,6 +79,7 @@ public class ProcessingListener {
 			}
 		} else if (stockOrder.getStatus().equals(Status.PARTIALLY_CONFIRMED)) {
 			if (orderProcessingStatus.getPaymentStatus().equals(ConfirmationStatus.CONFIRMED)) {
+				stockOrder.setPaymentStarted(true);
 				finalizeProcessing(stockOrder, Status.CONFIRMED);
 				log.info("Stock: CONFIRMED: {}", stockOrder);
 			} else if (orderProcessingStatus.getPaymentStatus().equals(ConfirmationStatus.REJECTED)) {
