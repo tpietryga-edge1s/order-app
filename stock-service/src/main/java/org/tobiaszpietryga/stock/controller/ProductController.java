@@ -50,7 +50,7 @@ public class ProductController {
 					.name(productRepository.findById(keyValue.key).map(Product::getName).orElseThrow())
 					.build()));
 		} catch (InvalidStateStoreException exception) {
-			throw new TechnicalException("Product statistics: KafkaStreams store exception: ", exception);
+			throw new TechnicalException("Product statistics: KafkaStreams store exception", exception);
 		}
 		return statistics;
 	}
