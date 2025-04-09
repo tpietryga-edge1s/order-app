@@ -1,4 +1,4 @@
-package org.tobiaszpietryga.stock.doman;
+package org.tobiaszpietryga.stock.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

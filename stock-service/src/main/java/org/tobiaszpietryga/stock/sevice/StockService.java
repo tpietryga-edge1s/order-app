@@ -9,7 +9,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.tobiaszpietryga.order.common.model.Order;
 import org.tobiaszpietryga.order.common.model.Status;
-import org.tobiaszpietryga.stock.doman.Product;
+import org.tobiaszpietryga.stock.domain.Product;
 import org.tobiaszpietryga.stock.repository.ProductRepository;
 
 @Service

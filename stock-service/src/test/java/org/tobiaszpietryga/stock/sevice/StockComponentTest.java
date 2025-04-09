@@ -2,17 +2,14 @@ package org.tobiaszpietryga.stock.sevice;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.tobiaszpietryga.order.common.model.Order;
 import org.tobiaszpietryga.order.common.model.Status;
-import org.tobiaszpietryga.stock.doman.Product;
+import org.tobiaszpietryga.stock.domain.Product;
 import org.tobiaszpietryga.stock.repository.ProductRepository;
 
 import static org.mockito.ArgumentMatchers.any;

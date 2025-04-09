@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.test.context.EmbeddedKafka;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +14,7 @@ import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 import org.tobiaszpietryga.order.common.model.Order;
 import org.tobiaszpietryga.order.common.model.Status;
-import org.tobiaszpietryga.stock.doman.Product;
+import org.tobiaszpietryga.stock.domain.Product;
 import org.tobiaszpietryga.stock.repository.ProductRepository;
 
 @SpringBootTest(properties = { "spring.kafka.consumer.auto-offset-reset=earliest" })

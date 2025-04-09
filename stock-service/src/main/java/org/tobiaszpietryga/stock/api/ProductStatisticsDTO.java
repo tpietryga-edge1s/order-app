@@ -9,4 +9,5 @@ public class ProductStatisticsDTO {
 	Long id;
 	String name;
 	Integer totalMoneyAmount;
+	Integer totalCount;
 }

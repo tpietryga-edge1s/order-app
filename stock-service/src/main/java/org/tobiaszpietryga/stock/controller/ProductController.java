@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tobiaszpietryga.stock.api.ProductStatisticsDTO;
-import org.tobiaszpietryga.stock.doman.Product;
+import org.tobiaszpietryga.stock.domain.Product;
+import org.tobiaszpietryga.stock.kafka.InternalStatistics;
 import org.tobiaszpietryga.stock.kafka.KafkaConfiguration;
 import org.tobiaszpietryga.stock.repository.ProductRepository;
 
@@ -30,15 +31,15 @@ public class ProductController {
 	@GetMapping("statistics")
 	public List<ProductStatisticsDTO> statistics() {
 		List<ProductStatisticsDTO> statistics = new ArrayList<>();
-		ReadOnlyKeyValueStore<Long, Integer> store = kafkaStreamsFactory
+		ReadOnlyKeyValueStore<Long, InternalStatistics> store = kafkaStreamsFactory
 				.getKafkaStreams()
 				.store(StoreQueryParameters.fromNameAndType(
 						KafkaConfiguration.PRODUCT_STATISTICS_STORE,
 						QueryableStoreTypes.keyValueStore()));
-		KeyValueIterator<Long, Integer> it = store.all();
+		KeyValueIterator<Long, InternalStatistics> it = store.all();
 		it.forEachRemaining(keyValue -> statistics.add(ProductStatisticsDTO.builder()
 						.id(keyValue.key)
-						.totalMoneyAmount(keyValue.value)
+						.totalMoneyAmount(keyValue.value.getAmount())
 						.name(productRepository.findById(keyValue.key).map(Product::getName).orElseThrow())
 				.build()));
 		return statistics;

@@ -1,11 +1,5 @@
 package org.tobiaszpietryga.stock.kafka;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -43,16 +37,4 @@ public class KafkaConfiguration {
 						.withValueSerde(statisticsSerde));
 	}
 
-	@Value
-	public static class InternalStatistics {
-		Integer amount;
-		Integer count;
-
-		public static InternalStatistics createNew() {
-			return new InternalStatistics(0, 0);
-		}
-		public InternalStatistics incrementBy(Integer amount, Integer count) {
-			return new InternalStatistics(this.amount+amount, this.count+count);
-		}
-	}
 }
