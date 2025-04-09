@@ -2,8 +2,10 @@ package org.tobiaszpietryga.stock.kafka;
 
 import java.beans.ConstructorProperties;
 
+import lombok.Getter;
 import lombok.Value;
 
+@Getter
 public class InternalStatistics {
 	Integer amount;
 	Integer count;
