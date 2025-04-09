@@ -40,6 +40,7 @@ public class ProductController {
 		it.forEachRemaining(keyValue -> statistics.add(ProductStatisticsDTO.builder()
 						.id(keyValue.key)
 						.totalMoneyAmount(keyValue.value.getAmount())
+						.totalCount(keyValue.value.getCount())
 						.name(productRepository.findById(keyValue.key).map(Product::getName).orElseThrow())
 				.build()));
 		return statistics;
