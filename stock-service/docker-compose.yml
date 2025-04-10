@@ -13,8 +13,8 @@ services:
       - broker
     environment:
       SPRING_PROFILES_ACTIVE: docker
-  stock-service:
-    image: order-app/stock-service:0.0.1-SNAPSHOT
+  order-service:
+    image: order-app/order-service:0.0.1-SNAPSHOT
     links:
       - broker
     environment:
