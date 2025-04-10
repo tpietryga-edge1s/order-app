@@ -1,5 +1,8 @@
 package org.tobiaszpietryga.stock.sevice;
 
+import java.time.Duration;
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,10 @@ import org.tobiaszpietryga.order.common.model.Order;
 import org.tobiaszpietryga.order.common.model.Status;
 import org.tobiaszpietryga.stock.domain.Product;
 import org.tobiaszpietryga.stock.repository.ProductRepository;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @SpringBootTest(properties = { "spring.kafka.consumer.auto-offset-reset=earliest" })
 @Testcontainers
@@ -40,10 +47,16 @@ public class StockTestContainersTest {
 		kafkaTemplate.send("orders", 1L, prepareOrder(Status.NEW, true, 5, 1L));
 
 		//then
-		Thread.sleep(1000);
-		Product product = productRepository.findById(1L).orElseThrow();
-		Assertions.assertThat(product.getItemsAvailable()).isEqualTo(95);
-		Assertions.assertThat(product.getItemsReserved()).isEqualTo(5);
+		await()
+				.pollInterval(Duration.ofSeconds(3))
+				.atMost(10, SECONDS)
+				.untilAsserted(() -> {
+					Optional<Product> optionalProduct = productRepository.findById(1L);
+					Assertions.assertThat(optionalProduct).isPresent();
+					Product product = optionalProduct.get();
+					Assertions.assertThat(product.getItemsAvailable()).isEqualTo(95);
+					Assertions.assertThat(product.getItemsReserved()).isEqualTo(5);
+				});
 	}
 
 	private static Order prepareOrder(Status status, boolean stockStarted, int productCount, long productId) {

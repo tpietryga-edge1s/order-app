@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.tobiaszpietryga.order.common.model.Order;
 import org.tobiaszpietryga.order.common.model.Status;
 import org.tobiaszpietryga.stock.domain.Product;
@@ -21,6 +22,7 @@ public class StockService {
 	@Value("${stock-orders.topic.name}")
 	private String topicName;
 
+	@Transactional
 	public void reserveStock(Order order) {
 		Optional<Product> possibleProduct = productRepository.findById(order.getProductId());
 		if (possibleProduct.isPresent()) {
@@ -43,6 +45,7 @@ public class StockService {
 		log.info("Reserve: message sent: {}", order);
 	}
 
+	@Transactional
 	public void confirmOrRollbackStock(Order order) {
 		Optional<Product> possibleProduct = productRepository.findById(order.getProductId());
 		if (possibleProduct.isPresent()) {
